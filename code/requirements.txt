@@ -1,0 +1,8 @@
+gunicorn
+gevent
+flask
+jieba
+wordcloud
+numpy
+matplotlib
+Pillow
