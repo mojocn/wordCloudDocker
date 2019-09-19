@@ -16,7 +16,8 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['POST'])
-def hello_world():
+def word_cloud():
+    # Flask的工作目录 code
     d = app.root_path
     # Flask form post参数 文本string
     text = request.form['content']
@@ -40,10 +41,10 @@ def hello_world():
     # wc.to_file(os.path.join(d, "alice.png"))
 
     # show
+    # 设置画布 6.68 inch 默认100dpi 所以分表率位668x668 和mask图片尺寸一致
     plt.figure(figsize=(6.68,6.68))
     plt.imshow(wc, interpolation='bilinear')
     plt.axis("off")
-    # plt.figure()
     # plt.imshow(mask_image, cmap=plt.cm.gray, interpolation='bilinear')
     # plt.axis("off")
     # plt.show()
@@ -51,20 +52,21 @@ def hello_world():
     image = io.BytesIO()
     plt.savefig(image, format='png')
     image.seek(0)  # rewind the data
-
+    # 转换成base64
     b64png = base64.b64encode(image.read())
     image_64 = 'data:image/png;base64,' + urllib.parse.quote(b64png)
-
+    # 直接返回 base64 png 字符串
     return image_64
 
-
+# debug用的
 @app.route('/debug', methods=['POST'])
 def debug():
+    # Flask的工作目录 code
     d = app.root_path
     text = request.form['content']
     gender = request.form['gender']
 
-    font = os.path.join(d, 'PingFangMedium.ttf')
+    font = os.path.join(d, 'simhei.ttf')
 
     mask_path = os.path.join(d, "{}_new.png".format(gender))
     mask_image = np.array(Image.open(mask_path))
@@ -73,7 +75,7 @@ def debug():
     world_split = ' '.join(world_list_after_jieba)
     # 248  664 女的 #FDD3D9
     # 210  664 男的 #C1DBFF
-    #
+    # contour 轮廓的意思
 
     wc = WordCloud(collocations=False,
                    contour_width=2,
@@ -90,6 +92,7 @@ def debug():
 
     # show
     plt.figure(figsize=(6.68,6.68))
+    # wc.recolor(color_func=image_colors 重新着色
     plt.imshow(wc.recolor(color_func=image_colors), interpolation="bilinear")
 
     #plt.imshow(wc, interpolation='bilinear')
