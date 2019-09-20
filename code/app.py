@@ -5,10 +5,11 @@ except ImportError:  # Python 2
 import base64
 import io
 import os
+
 import jieba
-from flask import Flask, request, send_file
 import numpy as np
 from PIL import Image
+from flask import Flask, request, send_file
 from wordcloud import WordCloud
 
 app = Flask(__name__)
@@ -17,9 +18,9 @@ app = Flask(__name__)
 @app.route('/api/word-cloud', methods=['POST'])
 def word_cloud():
     d = app.root_path
-    text = request.form['content']
-    gender = request.form['gender']
-    is_debug = request.form['debug']
+    text = request.form.get('content', '')
+    gender = request.form.get('gender', 'man')
+    is_debug = request.form.get('debug', "0")
     font = os.path.join(d, 'simhei.ttf')
 
     mask_path = os.path.join(d, "{}_mask.png".format(gender))
