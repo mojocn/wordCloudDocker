@@ -20,7 +20,10 @@ $ python app.py
 # image 名称位worldcloud
 docker build -t worldcloud https://github.com/mojocn/wordCloudDocker.git
 # run docker image
-docker run -d -p 8111:8111 worldcloud
+docker run -d -p 8111:8111 \
+-v /data/dir_of_selenium_image:/data/screen_shot \
+-v /data/dir_of_flask_log:/data/log \
+worldcloud
 ```
 
 ## 3. API文档
