@@ -6,3 +6,4 @@ wordcloud
 numpy
 matplotlib
 Pillow
+selenium

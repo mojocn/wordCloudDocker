@@ -75,3 +75,12 @@ print(response.text)
 ![](wc.png)
 
 ![](code/alice.png)
+
+## 5. selenium + chrome-driver 网页截图
+
+| 接口 | 说明 |
+| --- | --- |
+| URI| :8111/ss |
+| url-参数:u | url截图网址  |
+| url-参数:i| id防止md5 url值重复  |
+| HTTP-Response| image/png |
